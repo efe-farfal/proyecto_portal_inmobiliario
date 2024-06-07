@@ -1,0 +1,75 @@
+{% load static %}
+  <div class="sub-header">
+    <div class="container bg-light">
+      <div class="row">
+        <div class="col-lg-6 col-md-6">
+        <ul class="info">
+        <li><i class="fa fa-envelope"></i> info@inmobiliaria.cl</li>
+        <li><i class="fa fa-map"></i> Los Arrayanes 380, Valdivia, Los Ríos</li>
+        </ul>
+      </div>
+      <div class="col-lg-6 col-md-6">
+        <ul class="social-links">
+          <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+          <li><a href="https://x.com/minthu" target="_blank"><i class="fab fa-twitter"></i></a></li>
+          <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
+          <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+            {% if user.is_authenticated %}
+            <p>bienvenido {{ user.username }}</p>
+            <form action="{% url 'logout' %}" method="post">
+              {% csrf_token %}
+              <button data-mdb-ripple-init type="submit" class="btn btn-outline">
+                cerrar sesión
+              </button>
+            </form>
+            {% else %}
+            <a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a>
+            <a class="nav-link" href="{% url 'registro_usuario' %}">Registro</a>
+            {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+<!-- ***** Header Area Start ***** -->
+<header class="header-area header-sticky">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <nav class="main-nav">
+          <!-- ***** Logo Start ***** -->
+          <a href="{% url 'home' %}" class="logo">
+            <h2>Portal Inmobiliario</h2>
+          </a>
+          <!-- ***** Logo End ***** -->
+          <!-- ***** Menu Start ***** -->
+          <ul class="nav">
+
+            <li><a class="nav-link d-inline" href="{% url 'home' %}">Inicio</a></li>
+            {% if user.is_authenticated %}
+            <li><a class="nav-link d-inline" href="{% url 'dashboard' %}">Dashboard</a></li>
+            <li><a class="nav-link d-inline" href="{% url 'actualizar_usuario' %}">Perfil</a></li>
+            {% endif %}
+
+            {% if user.is_authenticated and user.tipo_usuario == 'arrendador' %}
+              <li><a class="nav-link d-inline" href="{% url 'alta_inmueble' %}">Crear inmueble</a></li>
+            {% endif %}
+
+            {% comment %} <li><a href="property-details.html">Detalles de la propiedad</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="#"><i class="fa fa-calendar"></i> Agenda una visita</a></li>
+            {% endcomment %}
+
+          </ul>
+
+          <a class='menu-trigger'>
+            <span>Menu</span>
+          </a>
+          <!-- ***** Menu End ***** -->
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ***** Header Area End ***** -->
